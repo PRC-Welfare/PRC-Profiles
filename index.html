@@ -8,11 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            /* PRC Colors */
             --prc-blue: #254F71;
             --prc-peach: #EE835E;
-            
-            /* Dark Theme Colors */
             --bg-dark: #0F161E;       
             --card-bg: #1A2430;       
             --input-bg: #233140;      
@@ -89,10 +86,7 @@
             box-shadow: 0 0 0 3px rgba(238, 131, 94, 0.2);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+        textarea { resize: vertical; min-height: 100px; }
 
         input[type="file"] {
             margin-bottom: 25px;
@@ -141,9 +135,7 @@
             transition: all 0.3s ease;
         }
 
-        button.btn-secondary:hover {
-            background-color: var(--prc-blue);
-        }
+        button.btn-secondary:hover { background-color: var(--prc-blue); }
 
         #loading {
             display: none;
@@ -153,13 +145,8 @@
             margin-top: 15px;
         }
 
-        .qr-section {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        .qr-section { margin-top: 30px; display: flex; flex-direction: column; align-items: center; }
+        
         #qrcode {
             background: white; 
             padding: 15px;
@@ -200,7 +187,6 @@
     </div>
 
 <script>
-    // Your exact credentials
     const cloudName = "u7i06d42"; 
     const uploadPreset = "dog_videos"; 
     const myGithubUrl = "https://prc-welfare.github.io/PRC-Profiles/profile.html";
@@ -263,14 +249,13 @@
         }
     }
 
-    // Function to download the QR code image directly to the computer
     function downloadQR() {
         const qrImage = document.querySelector('#qrcode img');
         if (qrImage && qrImage.src) {
             const link = document.createElement('a');
             link.href = qrImage.src;
             const dogName = document.getElementById('dogName').value || "Pet";
-            link.download = `PRC_QR_${dogName}.png`; // Names the file: PRC_QR_Bella.png
+            link.download = `PRC_QR_${dogName}.png`; 
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
