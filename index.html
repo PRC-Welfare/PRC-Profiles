@@ -4,58 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRC | Profile Creator</title>
-    <!-- Import Google Font for a sleek look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
+            /* PRC Colors */
             --prc-blue: #254F71;
             --prc-peach: #EE835E;
-            --bg-light: #f4f7f9;
-            --text-main: #333333;
+            
+            /* Dark Theme Colors */
+            --bg-dark: #0F161E;       
+            --card-bg: #1A2430;       
+            --input-bg: #233140;      
+            --text-main: #E2E8F0;     
+            --text-muted: #94A3B8;    
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
+            background-color: var(--bg-dark);
             margin: 0;
             padding: 0;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
         .header {
             width: 100%;
-            background-color: var(--prc-blue);
+            background-color: var(--card-bg);
             color: white;
             padding: 20px 0;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-bottom: 4px solid var(--prc-blue);
         }
 
         .header h1 {
             margin: 0;
             font-size: 24px;
             letter-spacing: 1px;
+            color: var(--prc-peach);
         }
 
         .container {
-            background: white;
+            background: var(--card-bg);
             max-width: 450px;
             width: 90%;
             margin: 40px auto;
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(37, 79, 113, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             box-sizing: border-box;
+            border: 1px solid #2A3847;
         }
 
         label {
             font-size: 14px;
             font-weight: 600;
-            color: var(--prc-blue);
+            color: var(--prc-peach);
             margin-bottom: 8px;
             display: block;
         }
@@ -64,7 +73,9 @@
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
+            background-color: var(--input-bg);
+            border: 1px solid #334558;
+            color: var(--text-main);
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
@@ -75,7 +86,7 @@
         input[type="text"]:focus, textarea:focus {
             outline: none;
             border-color: var(--prc-peach);
-            box-shadow: 0 0 0 3px rgba(238, 131, 94, 0.1);
+            box-shadow: 0 0 0 3px rgba(238, 131, 94, 0.2);
         }
 
         textarea {
@@ -86,33 +97,58 @@
         input[type="file"] {
             margin-bottom: 25px;
             font-size: 14px;
+            color: var(--text-muted);
         }
 
-        button {
+        input[type="file"]::file-selector-button {
+            background-color: var(--prc-blue);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-right: 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button.btn-primary {
             width: 100%;
             background-color: var(--prc-peach);
             color: white;
             border: none;
             padding: 14px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            background-color: #d9724e;
+        button.btn-primary:hover { background-color: #d9724e; }
+
+        button.btn-secondary {
+            width: 100%;
+            background-color: transparent;
+            color: white;
+            border: 2px solid var(--prc-blue);
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: none; 
+            transition: all 0.3s ease;
         }
 
-        button:active {
-            transform: scale(0.98);
+        button.btn-secondary:hover {
+            background-color: var(--prc-blue);
         }
 
         #loading {
             display: none;
             text-align: center;
-            color: var(--prc-blue);
+            color: var(--prc-peach);
             font-weight: 600;
             margin-top: 15px;
         }
@@ -125,25 +161,16 @@
         }
 
         #qrcode {
-            background: white;
+            background: white; 
             padding: 15px;
             border-radius: 12px;
-            border: 2px dashed var(--prc-blue);
+            border: 3px solid var(--prc-blue);
+            display: none; 
         }
 
-        #linkText {
-            margin-top: 15px;
-        }
-
-        #linkText a {
-            color: var(--prc-blue);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        #linkText a:hover {
-            text-decoration: underline;
-        }
+        #linkText { margin-top: 15px; }
+        #linkText a { color: #63B3ED; text-decoration: none; font-weight: 600; }
+        #linkText a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -159,24 +186,23 @@
         <label>Profile Description</label>
         <textarea id="dogDesc" placeholder="Breed, age, personality, quirks..."></textarea>
         
-        <label>Upload Video (.mp4)</label>
+        <label>Upload New Video (.mp4)</label>
         <input type="file" id="dogVideo" accept="video/mp4,video/x-m4v,video/*">
 
-        <button onclick="createProfile()">Upload & Generate QR</button>
+        <button class="btn-primary" onclick="createProfile()">Upload & Generate QR</button>
         <p id="loading">⏳ Uploading video to cloud... please wait!</p>
 
         <div class="qr-section">
             <div id="qrcode"></div>
             <p id="linkText"></p>
+            <button class="btn-secondary" id="downloadBtn" onclick="downloadQR()">⬇️ Download QR Code</button>
         </div>
     </div>
 
 <script>
-    // ⚠️ 1. REPLACE THESE WITH YOUR CLOUDINARY INFO ⚠️
+    // Your exact credentials
     const cloudName = "u7i06d42"; 
     const uploadPreset = "dog_videos"; 
-    
-    // ⚠️ 2. REPLACE WITH YOUR GITHUB PAGES URL ⚠️
     const myGithubUrl = "https://prc-welfare.github.io/PRC-Profiles/profile.html";
 
     async function createProfile() {
@@ -191,7 +217,9 @@
 
         document.getElementById('loading').style.display = "block";
         document.getElementById('qrcode').innerHTML = ""; 
+        document.getElementById('qrcode').style.display = "none";
         document.getElementById('linkText').innerHTML = ""; 
+        document.getElementById('downloadBtn').style.display = "none";
 
         const formData = new FormData();
         formData.append("file", file);
@@ -204,7 +232,6 @@
             });
             const data = await response.json();
             
-            // Get the video URL and compress it slightly by forcing mp4 format via Cloudinary API
             let videoUrl = data.secure_url; 
             
             const params = new URLSearchParams();
@@ -214,22 +241,41 @@
 
             const profileLink = `${myGithubUrl}?${params.toString()}`;
 
+            document.getElementById('qrcode').style.display = "block";
+            
             new QRCode(document.getElementById("qrcode"), {
                 text: profileLink,
                 width: 220, 
                 height: 220,
-                colorDark : "#254F71", // QR Code matches the PRC Blue!
+                colorDark : "#254F71", 
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.L 
             });
 
-            document.getElementById('linkText').innerHTML = `<a href="${profileLink}" target="_blank">🔗 Test Profile Link</a>`;
+            document.getElementById('linkText').innerHTML = `<a href="${profileLink}" target="_blank">🔗 Test Live Profile Link</a>`;
+            document.getElementById('downloadBtn').style.display = "block";
             document.getElementById('loading').style.display = "none";
 
         } catch (error) {
             console.error("Upload failed", error);
             alert("Error uploading video. Check your Cloudinary settings.");
             document.getElementById('loading').style.display = "none";
+        }
+    }
+
+    // Function to download the QR code image directly to the computer
+    function downloadQR() {
+        const qrImage = document.querySelector('#qrcode img');
+        if (qrImage && qrImage.src) {
+            const link = document.createElement('a');
+            link.href = qrImage.src;
+            const dogName = document.getElementById('dogName').value || "Pet";
+            link.download = `PRC_QR_${dogName}.png`; // Names the file: PRC_QR_Bella.png
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("Please wait for the QR code to finish generating.");
         }
     }
 </script>
