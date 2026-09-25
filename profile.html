@@ -9,7 +9,157 @@
     <style>
         :root {
             --prc-blue: #254F71;
+            --prc-peach: #EE835E;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRC Pet Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* PRC Colors */
+            --prc-blue: #254F71;
             --prc-peach: #EE835E;
+            
+            /* Dark Theme Colors */
+            --bg-dark: #0F161E;       
+            --card-bg: #1A2430;       
+            --text-main: #E2E8F0;     
+            --text-muted: #94A3B8; 
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px; 
+            margin: 0;
+            min-height: 100vh;
+            box-sizing: border-box;
+            color: var(--text-main);
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            max-width: 420px; 
+            width: 100%; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #2A3847;
+        }
+
+        .card-header {
+            background-color: var(--prc-blue);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--prc-peach);
+        }
+
+        .card-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-wrap; 
+            margin-bottom: 25px;
+            background: #233140;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #334558;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            background: black;
+        }
+
+        video { 
+            width: 100%; 
+            display: block; 
+            max-height: 450px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-top: 1px solid #2A3847;
+            background: var(--card-bg);
+        }
+        
+        .footer span {
+            color: var(--prc-peach);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="profileCard">
+    <div class="card-header">
+        <h1 id="displayName">Loading...</h1>
+    </div>
+    
+    <div class="card-body">
+        <div class="description" id="displayDesc">Please wait...</div>
+        
+        <div class="video-wrapper" id="videoContainer">
+            <!-- Video goes here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        Powered by <span>PRC</span>
+    </div>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const dogName = urlParams.get('n');
+    const dogDesc = urlParams.get('d');
+    const videoUrl = urlParams.get('v');
+
+    if(dogName && videoUrl) {
+        document.getElementById('displayName').innerText = dogName;
+        document.getElementById('displayDesc').innerText = dogDesc;
+        
+        document.getElementById('videoContainer').innerHTML = `
+            <video controls playsinline preload="metadata">
+                <source src="${videoUrl}" type="video/mp4">
+                Your browser does not support video.
+            </video>
+        `;
+    } else {
+        document.getElementById('displayName').innerText = "Oops!";
+        document.getElementById('displayDesc').innerText = "It looks like this QR code link is broken or missing data.";
+        document.getElementById('videoContainer').style.display = "none";
+    }
+</script>
+
+</body>
+</html>
             --bg-light: #f4f7f9;
             --text-main: #333333;
             --text-muted: #666666;
