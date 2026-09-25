@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Profile</title>
+    <style>
+        body { font-family: sans-serif; background: #eef2f3; display: flex; justify-content: center; padding: 20px; margin: 0;}
+        .card { background: white; max-width: 400px; width: 100%; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; text-align: center; }
+        video { width: 100%; border-radius: 10px; margin-top: 15px; background: black; max-height: 400px; }
+        h1 { margin-bottom: 5px; color: #333; }
+        p { color: #555; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="card" id="profileCard">
+    <h1 id="displayName">Scanning...</h1>
+    <p id="displayDesc"></p>
+    <div id="videoContainer"></div>
+</div>
+
+<script>
+    // 1. Grab the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const dogName = urlParams.get('n');
+    const dogDesc = urlParams.get('d');
+    const videoUrl = urlParams.get('v');
+
+    // 2. If data exists, display it!
+    if(dogName && videoUrl) {
+        document.getElementById('displayName').innerText = dogName;
+        document.getElementById('displayDesc').innerText = dogDesc;
+        
+        document.getElementById('videoContainer').innerHTML = `
+            <video controls playsinline>
+                <source src="${videoUrl}" type="video/mp4">
+                Your browser does not support video.
+            </video>
+        `;
+    } else {
+        document.getElementById('displayName').innerText = "Oops!";
+        document.getElementById('displayDesc').innerText = "It looks like this QR code doesn't contain profile data.";
+    }
+</script>
+
+</body>
+</html>
